@@ -1,0 +1,26 @@
+{% extends "store/base.html" %}
+
+{% block content %}
+<h2>สาขาใกล้คุณ</h2>
+
+{% if results %}
+<ul class="list-group mt-3">
+    {% for r in results %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+            <strong>{{ r.branch.name }}</strong><br>
+            {{ r.branch.address }}<br>
+            ระยะทาง: {{ r.distance|floatformat:2 }} กม.
+        </div>
+
+        <a class="btn btn-primary" href="{% url 'select_branch' r.branch.id %}">
+            เลือกสาขานี้
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>ยังไม่มีข้อมูลสาขา หรือยังไม่ได้ดึงตำแหน่ง</p>
+{% endif %}
+
+{% endblock %}

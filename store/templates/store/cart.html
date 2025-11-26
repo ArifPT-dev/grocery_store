@@ -1,0 +1,51 @@
+{% extends "store/base.html" %}
+
+{% block content %}
+<h2 class="mb-3">🛒 ตะกร้าสินค้า</h2>
+
+{% if not items %}
+<p>ยังไม่มีสินค้าในตะกร้า</p>
+{% else %}
+
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>สินค้า</th>
+            <th>จำนวน</th>
+            <th>ราคา/ชิ้น</th>
+            <th>รวม</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for item in items %}
+    <tr>
+        <td>{{ item.name }}</td>
+
+        <!-- แบบแก้จำนวน -->
+        <td>
+            <form method="post" action="{% url 'update_cart_item' item.id %}">
+                {% csrf_token %}
+                <input type="number" name="quantity" value="{{ item.qty }}" min="1" class="form-control" style="width: 80px; display:inline-block;">
+                <button class="btn btn-sm btn-primary">อัปเดต</button>
+            </form>
+        </td>
+
+        <td>{{ item.price }}</td>
+        <td>{{ item.total }}</td>
+
+        <td>
+            <a href="{% url 'delete_cart_item' item.id %}" class="btn btn-sm btn-danger">
+                ลบ
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'checkout' %}" class="btn btn-lg btn-success mt-3">
+    ดำเนินการชำระเงิน
+</a>
+
+{% endif %}
+{% endblock %}

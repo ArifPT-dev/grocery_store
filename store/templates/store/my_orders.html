@@ -1,0 +1,30 @@
+{% extends "store/base.html" %}
+{% block content %}
+
+<h2 class="mb-3">📦 ประวัติคำสั่งซื้อ</h2>
+
+{% if not orders %}
+    <p>ยังไม่มีคำสั่งซื้อ</p>
+{% else %}
+<table class="table mt-3">
+    <tr>
+        <th>เลขคำสั่งซื้อ</th>
+        <th>สาขา</th>
+        <th>ยอดรวม</th>
+        <th>วันที่สั่ง</th>
+        <th></th>
+    </tr>
+
+    {% for order in orders %}
+    <tr>
+        <td>{{ order.id }}</td>
+        <td>{{ order.branch.name }}</td>
+        <td>{{ order.total_price }}</td>
+        <td>{{ order.created_at|date:"d/m/Y H:i" }}</td>
+        <td><a href="{% url 'order_detail' order.id %}" class="btn btn-primary btn-sm">ดูรายละเอียด</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+{% endblock %}

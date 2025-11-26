@@ -1,0 +1,40 @@
+{% extends "store/base.html" %}
+{% block content %}
+
+<h2>สินค้าในสาขา {{ branch.name }}</h2>
+
+<div class="row mt-4">
+    {% for s in stocks %}
+    <div class="col-md-4 col-sm-6 mb-4">
+        <div class="card shadow-sm h-100">
+
+            {% if s.product.image %}
+            <img src="{{ s.product.image.url }}" 
+                style="width:100%; height:200px; object-fit:contain; background:#f8f8f8;">
+            {% endif %}
+
+            <div class="card-body">
+                <h5 class="card-title">{{ s.product.name }}</h5>
+                <p class="text-muted">{{ s.product.price }} บาท</p>
+                <p>คงเหลือ: <strong>{{ s.quantity }}</strong></p>
+
+                {% if user.is_authenticated %}
+                <form method="post" action="{% url 'add_to_cart' branch.id s.product.id %}">
+                    {% csrf_token %}
+                    <div class="input-group mb-2" style="max-width:150px;">
+                        <input type="number" name="quantity" value="1" min="1" max="{{ s.quantity }}" class="form-control">
+                    </div>
+                    <button class="btn btn-success w-100">เพิ่มลงตะกร้า</button>
+                </form>
+                {% else %}
+                <p class="text-danger">กรุณาเข้าสู่ระบบก่อนสั่งซื้อ</p>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+

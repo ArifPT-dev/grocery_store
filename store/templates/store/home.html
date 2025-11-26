@@ -1,0 +1,23 @@
+{% extends 'store/base.html' %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1>ยินดีต้อนรับสู่ Grocery Website</h1>
+<p>นี่คือหน้าแรกของเว็บไซต์ร้านค้าของเรา!</p>
+<button class="btn btn-primary" onclick="findLocation()">ค้นหาสาขาใกล้ฉัน</button>
+<script>
+function findLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            window.location.href = "/branches/near/?lat=" + lat + "&lon=" + lon;
+        }, function(error) {
+            alert("ไม่สามารถดึงตำแหน่งได้: " + error.message);
+        });
+    } else {
+        alert("เบราว์เซอร์ไม่รองรับการระบุตำแหน่ง");
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "store/base.html" %}
+{% block content %}
+
+<h2>ยืนยันการสั่งซื้อ</h2>
+
+<table class="table mt-3">
+    <tr><th>สินค้า</th><th>จำนวน</th><th>ราคา</th><th>รวม</th></tr>
+    {% for item in items %}
+    <tr>
+        <td>{{ item.name }}</td>
+        <td>{{ item.qty }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.total }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h3>รวมทั้งหมด: {{ total_price }} บาท</h3>
+
+<form method="post">
+    {% csrf_token %}
+    <button class="btn btn-success btn-lg mt-3">ยืนยันการสั่งซื้อ</button>
+</form>
+
+{% endblock %}

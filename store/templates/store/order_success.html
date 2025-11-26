@@ -1,0 +1,9 @@
+{% extends "store/base.html" %}
+{% block content %}
+
+<h2>สั่งซื้อสำเร็จ!</h2>
+<p>หมายเลขคำสั่งซื้อของคุณคือ: <strong>{{ order.id }}</strong></p>
+
+<a href="/orders/" class="btn btn-primary">ดูประวัติคำสั่งซื้อ</a>
+
+{% endblock %}
